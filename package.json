@@ -5,7 +5,7 @@
   "private": false,
   "version": "0.0.2-beta.3",
   "type": "module",
-  "main": "dist/index.cjs.js",
+  "main": "dist/index.umd.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -91,7 +91,13 @@
   },
   "peerDependencies": {
     "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
+    "react-dom": ">=18.0.0",
+    "classnames": "^2.5.1",
+    "@atlaskit/pragmatic-drag-and-drop": "^1.5.0",
+    "@atlaskit/pragmatic-drag-and-drop-hitbox": "^1.0.3",
+    "@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-autoscroll": "^2.0.0",
+    "@atlaskit/pragmatic-drag-and-drop-auto-scroll": "^2.1.0",
+    "virtua": "^0.40.4"
   },
   "peerDependenciesMeta": {
     "react": {
@@ -99,6 +105,24 @@
     },
     "react-dom": {
       "optional": false
+    },
+    "classnames": {
+      "optional": true
+    },
+    "@atlaskit/pragmatic-drag-and-drop": {
+      "optional": true
+    },
+    "@atlaskit/pragmatic-drag-and-drop-hitbox": {
+      "optional": true
+    },
+    "@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-autoscroll": {
+      "optional": true
+    },
+    "@atlaskit/pragmatic-drag-and-drop-auto-scroll": {
+      "optional": true
+    },
+    "virtua": {
+      "optional": true
     }
   }
 }

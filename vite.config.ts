@@ -9,11 +9,6 @@ export default defineConfig({
   plugins: [
     react({
       jsxRuntime: "automatic",
-      babel: {
-        plugins: [
-          ["@babel/plugin-transform-react-jsx", { runtime: "automatic" }],
-        ],
-      },
     }),
     dts({
       include: ["src"],
@@ -34,51 +29,41 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
       name: "ReactKanbanKit",
-      fileName: (format) => `index.${format === "es" ? "es.js" : "cjs.js"}`,
+      fileName: (format) => `index.${format}.js`,
     },
     rollupOptions: {
-      external: ["react", "react-dom", "react/jsx-runtime"],
-      output: [
-        {
-          format: "es",
-          dir: "dist",
-          entryFileNames: "[name].es.js",
-          preserveModules: true,
-          preserveModulesRoot: "src",
-          globals: {
-            react: "React",
-            "react-dom": "ReactDOM",
-            "react/jsx-runtime": "jsxRuntime",
-          },
-        },
-        {
-          format: "cjs",
-          dir: "dist",
-          entryFileNames: "[name].cjs.js",
-          globals: {
-            react: "React",
-            "react-dom": "ReactDOM",
-            "react/jsx-runtime": "jsxRuntime",
-          },
-        },
+      external: [
+        "react",
+        "react-dom",
+        "react/jsx-runtime",
+        "classnames",
+        "@atlaskit/pragmatic-drag-and-drop",
+        "@atlaskit/pragmatic-drag-and-drop-hitbox",
+        "@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-autoscroll",
+        "@atlaskit/pragmatic-drag-and-drop-auto-scroll",
+        "virtua",
       ],
+      output: {
+        globals: {
+          react: "React",
+          "react-dom": "ReactDOM",
+          "react/jsx-runtime": "jsxRuntime",
+          classnames: "classNames",
+          "@atlaskit/pragmatic-drag-and-drop": "pragmaticDragAndDrop",
+          "@atlaskit/pragmatic-drag-and-drop-hitbox":
+            "pragmaticDragAndDropHitbox",
+          "@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-autoscroll":
+            "pragmaticDragAndDropAutoscroll",
+          "@atlaskit/pragmatic-drag-and-drop-auto-scroll":
+            "pragmaticDragAndDropAutoScroll",
+          virtua: "virtua",
+        },
+      },
     },
     sourcemap: true,
     minify: "terser",
-    commonjsOptions: {
-      include: [/node_modules/],
-      transformMixedEsModules: true,
-    },
   },
-
   server: {
     port: 3000,
-
-    // to get images from the server
-    // proxy: {
-    //   '^/users': {
-    //     target: 'http://localhost:8000/',
-    //   },
-    // },
   },
 });
