@@ -20,7 +20,7 @@ interface ListProps {
   configMap: ConfigMap;
   cardWrapperStyle?: (
     card: BoardItem,
-    column: BoardItem
+    column: BoardItem,
   ) => React.CSSProperties;
   cardWrapperClassName?: string;
   cardsGap?: number;
@@ -44,7 +44,7 @@ const renderGenericItem = (
   cardOverShadowCount: number,
   renderListFooter: (column: BoardItem) => React.ReactNode,
   props: any,
-  count: number
+  count: number,
 ) => {
   return (
     <GenericItem
@@ -95,7 +95,7 @@ const VirtualizedList = ({
           cardOverShadowCount,
           renderListFooter,
           props,
-          count
+          count,
         )
       }
     </VList>
@@ -131,8 +131,8 @@ const NormalList = ({
             cardOverShadowCount,
             renderListFooter,
             props,
-            count
-          )
+            count,
+          ),
       )}
     </div>
   );
@@ -147,7 +147,7 @@ interface Props {
   renderSkeletonCard?: BoardProps["renderSkeletonCard"];
   cardWrapperStyle?: (
     card: BoardItem,
-    column: BoardItem
+    column: BoardItem,
   ) => React.CSSProperties;
   cardWrapperClassName?: string;
   onScroll?: (e: ScrollEvent, column: BoardItem) => void;
@@ -189,7 +189,7 @@ const ColumnContent = forwardRef<HTMLDivElement, Props>((props, ref) => {
   } = useKanbanContext();
   const containerClassName = classNames(
     withPrefix("column-content"),
-    columnListContentClassName
+    columnListContentClassName,
   );
 
   const onScroll = (e: ScrollEvent, column: BoardItem) => {

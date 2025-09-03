@@ -19,7 +19,7 @@ interface Props {
   loadMore?: (columnId: string) => void;
   onColumnClick?: (
     e: React.MouseEvent<HTMLDivElement>,
-    column: BoardItem
+    column: BoardItem,
   ) => void;
   onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
   renderColumnHeader?: (column: BoardItem) => React.ReactNode;
@@ -38,7 +38,7 @@ interface Props {
       className?: string;
       style?: React.CSSProperties;
       ref?: React.RefObject<HTMLDivElement>;
-    }
+    },
   ) => React.ReactNode;
   columnWrapperStyle?: (column: BoardItem) => React.CSSProperties;
   columnHeaderStyle?: (column: BoardItem) => React.CSSProperties;
@@ -59,7 +59,7 @@ interface Props {
   items: BoardItem[];
   cardWrapperStyle?: (
     card: BoardItem,
-    column: BoardItem
+    column: BoardItem,
   ) => React.CSSProperties;
   cardWrapperClassName?: string;
   onScroll?: (e: ScrollEvent, column: BoardItem) => void;
@@ -96,7 +96,7 @@ const Column = (props: Props) => {
 
   const containerClassName = classNames(
     withPrefix("column-outer"),
-    columnWrapperClassName?.(data)
+    columnWrapperClassName?.(data),
   );
 
   const ColumnWrapper = (children: React.ReactNode) =>
@@ -145,7 +145,7 @@ const Column = (props: Props) => {
             />
             {renderColumnFooter?.(data)}
           </div>
-        </div>
+        </div>,
       )}
     </div>
   );

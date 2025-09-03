@@ -5,10 +5,10 @@ export const handleScroll = (
   e: React.UIEvent<HTMLDivElement> | number,
   virtualization: boolean,
   onScroll: (e: ScrollEvent, column: BoardItem) => void,
-  column: BoardItem
+  column: BoardItem,
 ) => {
   const scrollContainer = document.querySelector(
-    `.${withPrefix("column-content-list")}`
+    `.${withPrefix("column-content-list")}`,
   );
   if (!scrollContainer) return;
 

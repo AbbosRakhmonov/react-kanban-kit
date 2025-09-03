@@ -41,7 +41,7 @@ export const useColumnDnd = (
   data: BoardItem,
   index: number,
   items: BoardItem[],
-  onColumnDndStateChange?: (info: DndState) => void
+  onColumnDndStateChange?: (info: DndState) => void,
 ) => {
   const { viewOnly } = useKanbanContext();
   const headerRef = useRef<HTMLDivElement>(null);
@@ -66,7 +66,7 @@ export const useColumnDnd = (
 
       setState(proposed);
     },
-    []
+    [],
   );
 
   const handleGenerateDragPreview = useCallback(
@@ -90,7 +90,7 @@ export const useColumnDnd = (
         },
       });
     },
-    []
+    [],
   );
 
   const handleDragStart = useCallback(() => {
@@ -111,7 +111,7 @@ export const useColumnDnd = (
         setState({ type: "is-column-over" });
       }
     },
-    [data.id, setIsCardOver]
+    [data.id, setIsCardOver],
   );
 
   const handleDropTargetChange = useCallback(
@@ -121,7 +121,7 @@ export const useColumnDnd = (
         return;
       }
     },
-    [setIsCardOver]
+    [setIsCardOver],
   );
 
   const handleDragLeave = useCallback(
@@ -131,7 +131,7 @@ export const useColumnDnd = (
       }
       setState(idle);
     },
-    [data.id]
+    [data.id],
   );
 
   const canDrop = useCallback(({ source }) => {
@@ -159,7 +159,7 @@ export const useColumnDnd = (
     }
 
     const scroller = outerFullHeightRef.current.querySelector(
-      `.${withPrefix("column-content-list")}`
+      `.${withPrefix("column-content-list")}`,
     );
 
     const columnData = {
@@ -198,7 +198,7 @@ export const useColumnDnd = (
         canScroll,
         getConfiguration,
         element: scroller,
-      })
+      }),
     );
   }, [
     data,

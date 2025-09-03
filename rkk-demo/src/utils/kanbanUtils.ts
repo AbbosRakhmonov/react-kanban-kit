@@ -6,12 +6,12 @@ export const getAddCardPlaceholderKey = (columnId: string) =>
 export const addCardPlaceholder = (
   columnId: string,
   dataSource: BoardData,
-  inTop: boolean = true
+  inTop: boolean = true,
 ): BoardData => {
   const addCardPlaceholderKey = getAddCardPlaceholderKey(columnId);
 
   const alreadyHasAddCardPlaceholder = dataSource[columnId].children.includes(
-    addCardPlaceholderKey
+    addCardPlaceholderKey,
   );
 
   return {
@@ -23,7 +23,7 @@ export const addCardPlaceholder = (
         : dataSource[columnId].totalChildrenCount + 1,
       children: alreadyHasAddCardPlaceholder
         ? dataSource[columnId].children.filter(
-            (child: string) => child !== addCardPlaceholderKey
+            (child: string) => child !== addCardPlaceholderKey,
           )
         : inTop
         ? [addCardPlaceholderKey, ...dataSource[columnId].children]
@@ -45,7 +45,7 @@ export const addCardPlaceholder = (
 
 export const removeCardPlaceholder = (
   columnId: string,
-  dataSource: BoardData
+  dataSource: BoardData,
 ) => {
   const addCardPlaceholderKey = getAddCardPlaceholderKey(columnId);
   return {
@@ -54,7 +54,7 @@ export const removeCardPlaceholder = (
       ...dataSource[columnId],
       totalChildrenCount: dataSource[columnId].totalChildrenCount - 1,
       children: dataSource[columnId].children.filter(
-        (child: string) => child !== addCardPlaceholderKey
+        (child: string) => child !== addCardPlaceholderKey,
       ),
     },
   };
@@ -64,7 +64,7 @@ export const addCard = (
   columnId: string,
   dataSource: BoardData,
   title: string,
-  inTop: boolean = true
+  inTop: boolean = true,
 ): BoardData => {
   const newTaskId = `task-${title}-${Date.now()}`;
   return {
@@ -75,7 +75,7 @@ export const addCard = (
       children: [
         inTop ? newTaskId : null,
         ...dataSource[columnId].children.filter(
-          (child: string) => child !== getAddCardPlaceholderKey(columnId)
+          (child: string) => child !== getAddCardPlaceholderKey(columnId),
         ),
         !inTop ? newTaskId : null,
       ].filter(Boolean),
@@ -97,7 +97,7 @@ export const addCard = (
 
 export const toggleCollapsedColumn = (
   columnId: string,
-  dataSource: BoardData
+  dataSource: BoardData,
 ): BoardData => {
   return {
     ...dataSource,
@@ -113,7 +113,7 @@ export const toggleCollapsedColumn = (
 
 export const toggleCardOver = (
   columnId: string,
-  dataSource: BoardData
+  dataSource: BoardData,
 ): BoardData => {
   return {
     ...dataSource,

@@ -93,10 +93,10 @@ export const handleCardDrop = ({
 
       // Find source and target indices
       const sourceIndex = allTasks.findIndex(
-        (task) => task.id === draggingCardId
+        (task) => task.id === draggingCardId,
       );
       const targetIndex = allTasks.findIndex(
-        (task) => task.id === targetCardId
+        (task) => task.id === targetCardId,
       );
 
       if (sourceIndex === -1 || targetIndex === -1) return;
@@ -115,7 +115,7 @@ export const handleCardDrop = ({
 
       // Calculate the new position based on the reordered array
       const newPosition = reordered.findIndex(
-        (task) => task.id === draggingCardId
+        (task) => task.id === draggingCardId,
       );
 
       // Find tasks above and below the insertion point
@@ -142,7 +142,7 @@ export const handleCardDrop = ({
 
       // Find the target task index
       const targetIndex = allTargetTasks.findIndex(
-        (task) => task.id === targetCardId
+        (task) => task.id === targetCardId,
       );
       if (targetIndex === -1) return;
       const finalIndex =
@@ -150,7 +150,7 @@ export const handleCardDrop = ({
 
       // Get the dragging task from source column
       const draggingTask = getTasksByColumnId(sourceColumnId, dataSource).find(
-        (task) => task.id === draggingCardId
+        (task) => task.id === draggingCardId,
       );
       if (!draggingTask) return;
 
@@ -169,7 +169,7 @@ export const handleCardDrop = ({
 
       // Calculate the new position based on the reordered array
       const newPosition = reordered.findIndex(
-        (task) => task.id === draggingCardId
+        (task) => task.id === draggingCardId,
       );
 
       const taskAbove = newPosition > 0 ? reordered[newPosition - 1] : null;
@@ -210,7 +210,7 @@ export const handleCardDrop = ({
 
 export const dropColumnHandler = (
   drop: { columnId: string; position: number },
-  dataSource: BoardData
+  dataSource: BoardData,
 ) => {
   const { columnId, position } = drop;
   const newDataSource = { ...dataSource };
@@ -238,7 +238,7 @@ export const dropHandler = (
   dataSource: BoardData,
   updateDroppedItem?: (targetColumn: BoardItem, droppedItem: any) => any,
   updateDestinationColumn?: (targetColumn: BoardItem) => any,
-  updateSourceColumn?: (sourceColumn: BoardItem) => any
+  updateSourceColumn?: (sourceColumn: BoardItem) => any,
 ) => {
   const { cardId, fromColumnId, toColumnId, taskAbove, taskBelow } = drop;
 
@@ -257,7 +257,7 @@ export const dropHandler = (
 
   if (updateSourceColumn && newDataSource[fromColumnId])
     newDataSource[fromColumnId] = updateSourceColumn(
-      newDataSource[fromColumnId]
+      newDataSource[fromColumnId],
     );
 
   const targetChildren = newDataSource[toColumnId]?.children || [];
@@ -277,7 +277,7 @@ export const dropHandler = (
   if (updateDroppedItem && newDataSource[cardId]) {
     const updatedItem = updateDroppedItem?.(
       newDataSource[toColumnId],
-      newDataSource[cardId]
+      newDataSource[cardId],
     );
     newDataSource[cardId] = updatedItem || newDataSource[cardId];
   }
@@ -291,7 +291,7 @@ export const dropHandler = (
 
   if (updateDestinationColumn && newDataSource[toColumnId])
     newDataSource[toColumnId] = updateDestinationColumn(
-      newDataSource[toColumnId]
+      newDataSource[toColumnId],
     );
 
   return newDataSource;

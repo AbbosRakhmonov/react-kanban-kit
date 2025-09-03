@@ -12,7 +12,7 @@ const toFnRef = <T>(ref?: Ref<T | null> | null) =>
 
 export default function mergeRefs<T>(
   refA?: Ref<T | null> | null,
-  refB?: Ref<T | null> | null
+  refB?: Ref<T | null> | null,
 ): React.RefCallback<T> {
   const a = toFnRef(refA);
   const b = toFnRef(refB);

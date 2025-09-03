@@ -137,12 +137,12 @@ const ClickUpCard = ({ data }: { data: BoardItem }) => {
 
 export const ClickUpExample: React.FC = () => {
   const [dataSource, setDataSource] = useState<BoardData>(
-    structuredClone(mockData) as BoardData
+    structuredClone(mockData) as BoardData,
   );
 
   const addCardPlaceholderHandler = (
     columnId: string,
-    inTop: boolean = true
+    inTop: boolean = true,
   ) => {
     setDataSource(addCardPlaceholder(columnId, dataSource, inTop));
   };
@@ -212,8 +212,8 @@ export const ClickUpExample: React.FC = () => {
                     totalChildrenCount:
                       (sourceColumn.totalChildrenCount || 0) - 1,
                   };
-                }
-              )
+                },
+              ),
             );
           }}
           columnListContentClassName={() => "clickup-column-list-content"}
@@ -233,7 +233,7 @@ export const ClickUpExample: React.FC = () => {
           )}
           allowListFooter={(column) => {
             return !column.children.includes(
-              getAddCardPlaceholderKey(column.id)
+              getAddCardPlaceholderKey(column.id),
             );
           }}
           onColumnClick={(_, column) => {

@@ -45,7 +45,7 @@ export interface BoardItem<T = any> {
   isDraggable?: boolean;
 }
 
-export interface BoardData<T=any> {
+export interface BoardData<T = any> {
   root: BoardItem<T>;
   [key: string]: BoardItem<T>;
 }
@@ -80,9 +80,9 @@ export interface BoardProps<T = any> {
       children,
       className,
       style,
-    }: { children: ReactNode; className?: string; style?: CSSProperties }
+    }: { children: ReactNode; className?: string; style?: CSSProperties },
   ) => ReactNode;
-  columnWrapperStyle?: (column: BoardItem<T>  ) => CSSProperties;
+  columnWrapperStyle?: (column: BoardItem<T>) => CSSProperties;
   columnHeaderStyle?: (column: BoardItem<T>) => CSSProperties;
   columnListContentStyle?: (column: BoardItem<T>) => CSSProperties;
   columnListContentClassName?: (column: BoardItem<T>) => string;
@@ -92,7 +92,10 @@ export interface BoardProps<T = any> {
   columnStyle?: (column: BoardItem<T>) => CSSProperties;
   rootStyle?: CSSProperties;
   rootClassName?: string;
-  cardWrapperStyle?: (card: BoardItem<T>, column: BoardItem<T>) => CSSProperties;
+  cardWrapperStyle?: (
+    card: BoardItem<T>,
+    column: BoardItem<T>,
+  ) => CSSProperties;
   cardWrapperClassName?: string;
   virtualization?: boolean;
   cardsGap?: number;
@@ -125,9 +128,12 @@ export interface BoardProps<T = any> {
   renderColumnFooter?: (column: BoardItem<T>) => ReactNode;
   onColumnClick?: (
     e: React.MouseEvent<HTMLDivElement>,
-    column: BoardItem<T>
+    column: BoardItem<T>,
   ) => void;
-  onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem<T>) => void;
+  onCardClick?: (
+    e: React.MouseEvent<HTMLDivElement>,
+    card: BoardItem<T>,
+  ) => void;
   onCardDndStateChange?: (info: DndState) => void;
   onColumnDndStateChange?: (info: DndState) => void;
 }

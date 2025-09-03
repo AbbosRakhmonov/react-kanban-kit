@@ -28,7 +28,7 @@ const CardSkeleton: React.FC<CardSkeletonProps> = ({
         <div className={withPrefix("skeleton-line")}></div>
         <div
           className={`${withPrefix("skeleton-line")} ${withPrefix(
-            "skeleton-line-short"
+            "skeleton-line-short",
           )}`}
         ></div>
       </div>

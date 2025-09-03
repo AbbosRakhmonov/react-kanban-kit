@@ -2,7 +2,7 @@ import { withPrefix } from "./getPrefix";
 
 export const checkIfSkeletonIsVisible = ({ columnId, limit = 20 }): boolean => {
   const skeletons = document.querySelectorAll(
-    `.${withPrefix("generic-item-skeleton")}[data-rkk-column="${columnId}"]`
+    `.${withPrefix("generic-item-skeleton")}[data-rkk-column="${columnId}"]`,
   );
 
   if (!skeletons.length) return false;

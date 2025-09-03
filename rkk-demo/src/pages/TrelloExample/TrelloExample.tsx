@@ -117,12 +117,12 @@ const TrelloCard: React.FC<{ data: any }> = ({ data }) => {
 
 export const TrelloExample: React.FC = () => {
   const [dataSource, setDataSource] = useState<BoardData>(
-    structuredClone(mockData) as BoardData
+    structuredClone(mockData) as BoardData,
   );
 
   const addCardPlaceholderHandler = (
     columnId: string,
-    inTop: boolean = true
+    inTop: boolean = true,
   ) => {
     setDataSource(addCardPlaceholder(columnId, dataSource, inTop));
   };
@@ -191,8 +191,8 @@ export const TrelloExample: React.FC = () => {
                     totalChildrenCount:
                       (sourceColumn.totalChildrenCount || 0) - 1,
                   };
-                }
-              )
+                },
+              ),
             );
           }}
           renderListFooter={(column) => {
@@ -246,7 +246,7 @@ export const TrelloExample: React.FC = () => {
           }}
           allowListFooter={(column) => {
             return !column.children.includes(
-              getAddCardPlaceholderKey(column.id)
+              getAddCardPlaceholderKey(column.id),
             );
           }}
         />
