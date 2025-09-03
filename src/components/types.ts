@@ -2,10 +2,10 @@ import { TaskCardState } from "@/global/dnd/useCardDnd";
 import { TColumnState } from "@/global/dnd/useColumnDnd";
 import { CSSProperties, ReactNode } from "react";
 
-export interface DndState {
+export interface DndState<T = any> {
   state: TaskCardState | TColumnState;
-  column?: BoardItem;
-  card?: BoardItem;
+  column?: BoardItem<T>;
+  card?: BoardItem<T>;
 }
 
 export interface ScrollEvent {
@@ -16,27 +16,27 @@ export interface ScrollEvent {
   };
 }
 
-export type CardRenderProps = {
-  data: BoardItem;
-  column: BoardItem;
+export type CardRenderProps<T = any> = {
+  data: BoardItem<T>;
+  column: BoardItem<T>;
   index: number;
   isDraggable: boolean;
 };
 
-export type ConfigMap = {
+export type ConfigMap<T = any> = {
   [type: string]: {
-    render: (props: CardRenderProps) => React.ReactNode;
+    render: (props: CardRenderProps<T>) => React.ReactNode;
     isDraggable?: boolean;
   };
 };
 
-export interface BoardItem {
+export interface BoardItem<T = any> {
   id: string;
   title: string;
   parentId: string | null;
   children: string[];
-  content?: any;
-  type?: keyof ConfigMap;
+  content?: T;
+  type?: keyof ConfigMap<T>;
   totalItems?: number;
   // totalChildrenCount is the total number of children in the column
   totalChildrenCount: number;
@@ -45,14 +45,14 @@ export interface BoardItem {
   isDraggable?: boolean;
 }
 
-export interface BoardData {
-  root: BoardItem;
-  [key: string]: BoardItem;
+export interface BoardData<T=any> {
+  root: BoardItem<T>;
+  [key: string]: BoardItem<T>;
 }
 
-export interface BoardProps {
-  dataSource: BoardData;
-  configMap: ConfigMap;
+export interface BoardProps<T = any> {
+  dataSource: BoardData<T>;
+  configMap: ConfigMap<T>;
   viewOnly?: boolean;
   loadMore?: (groupsId: string) => void;
   renderSkeletonCard?: ({
@@ -60,44 +60,44 @@ export interface BoardProps {
     column,
   }: {
     index: number;
-    column: BoardItem;
+    column: BoardItem<T>;
   }) => ReactNode;
-  renderColumnHeader?: (column: BoardItem) => ReactNode;
-  renderCardDragIndicator?: (card: BoardItem, info: any) => ReactNode;
-  renderCardDragPreview?: (card: BoardItem, info: any) => ReactNode;
+  renderColumnHeader?: (column: BoardItem<T>) => ReactNode;
+  renderCardDragIndicator?: (card: BoardItem<T>, info: any) => ReactNode;
+  renderCardDragPreview?: (card: BoardItem<T>, info: any) => ReactNode;
   // renderColumnDragIndicator?: (column: BoardItem, info: any) => ReactNode;
   // renderColumnDragPreview?: (column: BoardItem, info: any) => ReactNode;
 
-  renderListFooter?: (column: BoardItem) => ReactNode;
-  allowListFooter?: (column: BoardItem) => boolean;
+  renderListFooter?: (column: BoardItem<T>) => ReactNode;
+  allowListFooter?: (column: BoardItem<T>) => boolean;
 
   renderColumnAdder?: () => ReactNode;
   allowColumnAdder?: boolean;
 
   renderColumnWrapper?: (
-    column: BoardItem,
+    column: BoardItem<T>,
     {
       children,
       className,
       style,
     }: { children: ReactNode; className?: string; style?: CSSProperties }
   ) => ReactNode;
-  columnWrapperStyle?: (column: BoardItem) => CSSProperties;
-  columnHeaderStyle?: (column: BoardItem) => CSSProperties;
-  columnListContentStyle?: (column: BoardItem) => CSSProperties;
-  columnListContentClassName?: (column: BoardItem) => string;
-  columnWrapperClassName?: (column: BoardItem) => string;
-  columnHeaderClassName?: (column: BoardItem) => string;
-  columnClassName?: (column: BoardItem) => string;
-  columnStyle?: (column: BoardItem) => CSSProperties;
+  columnWrapperStyle?: (column: BoardItem<T>  ) => CSSProperties;
+  columnHeaderStyle?: (column: BoardItem<T>) => CSSProperties;
+  columnListContentStyle?: (column: BoardItem<T>) => CSSProperties;
+  columnListContentClassName?: (column: BoardItem<T>) => string;
+  columnWrapperClassName?: (column: BoardItem<T>) => string;
+  columnHeaderClassName?: (column: BoardItem<T>) => string;
+  columnClassName?: (column: BoardItem<T>) => string;
+  columnStyle?: (column: BoardItem<T>) => CSSProperties;
   rootStyle?: CSSProperties;
   rootClassName?: string;
-  cardWrapperStyle?: (card: BoardItem, column: BoardItem) => CSSProperties;
+  cardWrapperStyle?: (card: BoardItem<T>, column: BoardItem<T>) => CSSProperties;
   cardWrapperClassName?: string;
   virtualization?: boolean;
   cardsGap?: number;
   // renderGap?: (column: BoardItem) => ReactNode;
-  onScroll?: (e: ScrollEvent, column: BoardItem) => void;
+  onScroll?: (e: ScrollEvent, column: BoardItem<T>) => void;
   onColumnMove?: ({
     columnId,
     fromIndex,
@@ -122,17 +122,17 @@ export interface BoardProps {
     taskBelow: string | null;
     position: number;
   }) => void;
-  renderColumnFooter?: (column: BoardItem) => ReactNode;
+  renderColumnFooter?: (column: BoardItem<T>) => ReactNode;
   onColumnClick?: (
     e: React.MouseEvent<HTMLDivElement>,
-    column: BoardItem
+    column: BoardItem<T>
   ) => void;
-  onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
+  onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem<T>) => void;
   onCardDndStateChange?: (info: DndState) => void;
   onColumnDndStateChange?: (info: DndState) => void;
 }
 
-export interface DropParams {
+export interface DropParams<T = any> {
   source: {
     id: string;
     data: any;
@@ -144,8 +144,8 @@ export interface DropParams {
       }>;
     };
   };
-  columns: BoardItem[];
-  dataSource: BoardData;
-  onCardMove?: BoardProps["onCardMove"];
-  onColumnMove?: BoardProps["onColumnMove"];
+  columns: BoardItem<T>[];
+  dataSource: BoardData<T>;
+  onCardMove?: BoardProps<T>["onCardMove"];
+  onColumnMove?: BoardProps<T>["onColumnMove"];
 }
