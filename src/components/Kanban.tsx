@@ -26,6 +26,8 @@ const Kanban = forwardRef<HTMLDivElement, BoardProps>((props, ref) => {
     onCardMove,
     renderColumnWrapper,
     renderColumnAdder,
+    freezeFirstColumn = false,
+    freezeLastColumn = false,
     ...rest
   } = props;
 
@@ -59,6 +61,8 @@ const Kanban = forwardRef<HTMLDivElement, BoardProps>((props, ref) => {
             dataSource,
             onCardMove,
             onColumnMove,
+            freezeFirstColumn,
+            freezeLastColumn,
           });
         },
       }),
@@ -68,7 +72,7 @@ const Kanban = forwardRef<HTMLDivElement, BoardProps>((props, ref) => {
         getConfiguration: () => ({
           maxScrollSpeed: "standard",
         }),
-      }),
+      })
     );
   }, [columns, dataSource, onCardMove, onColumnMove]);
 
@@ -87,6 +91,7 @@ const Kanban = forwardRef<HTMLDivElement, BoardProps>((props, ref) => {
             index={index}
             data={column}
             items={getColumnChildren(column, dataSource)}
+            totalColumns={columns.length}
             renderColumnWrapper={renderColumnWrapper}
             {...rest}
           />

@@ -8,6 +8,9 @@ const App = () => {
     <div style={{ width: "100%", height: "86dvh" }}>
       <Kanban
         viewOnly={false}
+        allowColumnDrag={true} // Set to false to disable column dragging
+        freezeFirstColumn={true} // Freeze the first column
+        freezeLastColumn={true} // Freeze the last column
         onCardClick={(e, card) => {
           console.log();
         }}
@@ -91,6 +94,45 @@ const App = () => {
         onCardMove={(event) => {
           console.log({ event });
         }}
+        onColumnMove={(event) => {
+          console.log("Column moved:", event);
+        }}
+        renderColumnDragIndicator={(column, info) => (
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              height: "4px",
+              backgroundColor: "#007bff",
+              borderRadius: "2px",
+              zIndex: 10,
+              pointerEvents: "none",
+              boxShadow: "0 0 8px rgba(0, 123, 255, 0.5)",
+            }}
+          />
+        )}
+        renderColumnDragPreview={(column, info) => (
+          <div
+            style={{
+              background: "#fff",
+              padding: "12px",
+              borderRadius: "8px",
+              border: "2px solid #007bff",
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+              minWidth: "200px",
+              opacity: 0.9,
+            }}
+          >
+            <div style={{ fontWeight: "bold", marginBottom: "4px" }}>
+              {column.title}
+            </div>
+            <div style={{ fontSize: "12px", color: "#666" }}>
+              {column.totalChildrenCount || 0} tasks
+            </div>
+          </div>
+        )}
         allowColumnAdder={true}
         renderColumnAdder={() => <div>Add new Column</div>}
         renderListFooter={(column) => <div>Add new one</div>}
@@ -171,5 +213,5 @@ const App = () => {
 };
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <App />,
+  <App />
 );

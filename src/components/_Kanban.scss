@@ -6,3 +6,16 @@
   height: 100%;
   gap: 8px;
 }
+
+.#{$prefix}-column-drag-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: #007bff;
+  border-radius: 2px;
+  z-index: 10;
+  pointer-events: none;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}

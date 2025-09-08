@@ -7,6 +7,9 @@ export const getSharedProps = (props: BoardProps) => {
     cardsGap = 8,
     allowColumnAdder = true,
     allowListFooter,
+    allowColumnDrag = true,
+    freezeFirstColumn = false,
+    freezeLastColumn = false,
   } = props;
   return {
     viewOnly,
@@ -14,5 +17,8 @@ export const getSharedProps = (props: BoardProps) => {
     cardsGap,
     allowColumnAdder,
     allowListFooter,
+    allowColumnDrag,
+    freezeFirstColumn,
+    freezeLastColumn,
   };
 };

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React from "react";
 import {
   BoardItem,
   BoardProps,
@@ -15,11 +15,12 @@ import { useColumnDnd } from "@/global/dnd/useColumnDnd";
 interface Props {
   index: number;
   data: BoardItem;
+  totalColumns: number;
   configMap: ConfigMap;
   loadMore?: (columnId: string) => void;
   onColumnClick?: (
     e: React.MouseEvent<HTMLDivElement>,
-    column: BoardItem,
+    column: BoardItem
   ) => void;
   onCardClick?: (e: React.MouseEvent<HTMLDivElement>, card: BoardItem) => void;
   renderColumnHeader?: (column: BoardItem) => React.ReactNode;
@@ -38,7 +39,7 @@ interface Props {
       className?: string;
       style?: React.CSSProperties;
       ref?: React.RefObject<HTMLDivElement>;
-    },
+    }
   ) => React.ReactNode;
   columnWrapperStyle?: (column: BoardItem) => React.CSSProperties;
   columnHeaderStyle?: (column: BoardItem) => React.CSSProperties;
@@ -59,7 +60,7 @@ interface Props {
   items: BoardItem[];
   cardWrapperStyle?: (
     card: BoardItem,
-    column: BoardItem,
+    column: BoardItem
   ) => React.CSSProperties;
   cardWrapperClassName?: string;
   onScroll?: (e: ScrollEvent, column: BoardItem) => void;
@@ -69,6 +70,7 @@ const Column = (props: Props) => {
   const {
     index,
     data,
+    totalColumns,
     items,
     onColumnClick,
     renderColumnHeader,
@@ -83,6 +85,8 @@ const Column = (props: Props) => {
     columnClassName,
     columnStyle,
     renderColumnAdder,
+    renderColumnDragIndicator,
+    renderColumnDragPreview,
     ...rest
   } = props;
 
@@ -92,11 +96,22 @@ const Column = (props: Props) => {
     innerRef,
     state,
     cardOverShadowCount,
-  } = useColumnDnd(data, index, items, onColumnDndStateChange);
+  } = useColumnDnd(data, index, items, totalColumns, onColumnDndStateChange);
 
   const containerClassName = classNames(
     withPrefix("column-outer"),
     columnWrapperClassName?.(data),
+    {
+      [withPrefix("column-dragging")]: state.type === "is-dragging",
+    }
+  );
+
+  const columnClassNameWithState = classNames(
+    withPrefix("column"),
+    columnClassName?.(data),
+    {
+      [withPrefix("column-dragging")]: state.type === "is-dragging",
+    }
   );
 
   const ColumnWrapper = (children: React.ReactNode) =>
@@ -121,7 +136,7 @@ const Column = (props: Props) => {
     <div onClick={(e) => onColumnClick?.(e, data)}>
       {ColumnWrapper(
         <div
-          className={classNames(withPrefix("column"), columnClassName?.(data))}
+          className={columnClassNameWithState}
           ref={innerRef}
           style={columnStyle?.(data)}
         >
@@ -133,6 +148,14 @@ const Column = (props: Props) => {
               data={data}
               ref={headerRef}
             />
+            {/* Column Drag Indicator */}
+            {state.type === "is-column-over" && renderColumnDragIndicator && (
+              <div className={withPrefix("column-drag-indicator")}>
+                {renderColumnDragIndicator(data, {
+                  state,
+                })}
+              </div>
+            )}
             <ColumnContent
               items={items}
               column={data}
@@ -145,7 +168,7 @@ const Column = (props: Props) => {
             />
             {renderColumnFooter?.(data)}
           </div>
-        </div>,
+        </div>
       )}
     </div>
   );

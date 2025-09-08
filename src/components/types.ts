@@ -54,6 +54,9 @@ export interface BoardProps<T = any> {
   dataSource: BoardData<T>;
   configMap: ConfigMap<T>;
   viewOnly?: boolean;
+  allowColumnDrag?: boolean;
+  freezeFirstColumn?: boolean;
+  freezeLastColumn?: boolean;
   loadMore?: (groupsId: string) => void;
   renderSkeletonCard?: ({
     index,
@@ -65,8 +68,8 @@ export interface BoardProps<T = any> {
   renderColumnHeader?: (column: BoardItem<T>) => ReactNode;
   renderCardDragIndicator?: (card: BoardItem<T>, info: any) => ReactNode;
   renderCardDragPreview?: (card: BoardItem<T>, info: any) => ReactNode;
-  // renderColumnDragIndicator?: (column: BoardItem, info: any) => ReactNode;
-  // renderColumnDragPreview?: (column: BoardItem, info: any) => ReactNode;
+  renderColumnDragIndicator?: (column: BoardItem<T>, info: any) => ReactNode;
+  renderColumnDragPreview?: (column: BoardItem<T>, info: any) => ReactNode;
 
   renderListFooter?: (column: BoardItem<T>) => ReactNode;
   allowListFooter?: (column: BoardItem<T>) => boolean;
@@ -80,7 +83,7 @@ export interface BoardProps<T = any> {
       children,
       className,
       style,
-    }: { children: ReactNode; className?: string; style?: CSSProperties },
+    }: { children: ReactNode; className?: string; style?: CSSProperties }
   ) => ReactNode;
   columnWrapperStyle?: (column: BoardItem<T>) => CSSProperties;
   columnHeaderStyle?: (column: BoardItem<T>) => CSSProperties;
@@ -94,7 +97,7 @@ export interface BoardProps<T = any> {
   rootClassName?: string;
   cardWrapperStyle?: (
     card: BoardItem<T>,
-    column: BoardItem<T>,
+    column: BoardItem<T>
   ) => CSSProperties;
   cardWrapperClassName?: string;
   virtualization?: boolean;
@@ -128,11 +131,11 @@ export interface BoardProps<T = any> {
   renderColumnFooter?: (column: BoardItem<T>) => ReactNode;
   onColumnClick?: (
     e: React.MouseEvent<HTMLDivElement>,
-    column: BoardItem<T>,
+    column: BoardItem<T>
   ) => void;
   onCardClick?: (
     e: React.MouseEvent<HTMLDivElement>,
-    card: BoardItem<T>,
+    card: BoardItem<T>
   ) => void;
   onCardDndStateChange?: (info: DndState) => void;
   onColumnDndStateChange?: (info: DndState) => void;
@@ -154,4 +157,6 @@ export interface DropParams<T = any> {
   dataSource: BoardData<T>;
   onCardMove?: BoardProps<T>["onCardMove"];
   onColumnMove?: BoardProps<T>["onColumnMove"];
+  freezeFirstColumn?: boolean;
+  freezeLastColumn?: boolean;
 }

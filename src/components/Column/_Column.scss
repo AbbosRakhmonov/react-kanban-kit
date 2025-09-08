@@ -12,6 +12,12 @@
   -ms-transition: all 0.1s ease;
   -o-transition: all 0.1s ease;
 
+  // Dragging state for outer container
+  &.#{$prefix}-column-dragging {
+    z-index: 1000;
+    cursor: grabbing;
+  }
+
   .#{$prefix}-column {
     display: flex;
     flex-direction: column;
@@ -21,6 +27,7 @@
     background-color: #f0f0f0;
     position: relative;
     overflow: hidden;
+    transition: all 0.2s ease;
     // height: 100%; // Ensure column takes full height
 
     &-wrapper {
@@ -29,6 +36,17 @@
       flex: 1;
       gap: 16px;
       max-height: 100%;
+    }
+
+    // Dragging state styles
+    &-dragging {
+      opacity: 0.6;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      background-color: #f8f9ff;
+
+      .#{$prefix}-column-wrapper {
+        pointer-events: none; // Disable interactions while dragging
+      }
     }
   }
 }

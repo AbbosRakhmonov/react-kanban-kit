@@ -43,7 +43,7 @@ export const useCardDnd = (
   column: BoardItem,
   index: number,
   isDraggable: boolean,
-  onCardDndStateChange?: (info: DndState) => void,
+  onCardDndStateChange?: (info: DndState) => void
 ) => {
   const { viewOnly } = useKanbanContext();
   const outerRef = useRef<HTMLDivElement>(null);
@@ -61,7 +61,7 @@ export const useCardDnd = (
       parentId: data.parentId,
       rect: innerRef.current?.getBoundingClientRect() || null,
     }),
-    [data.id, column.id, index, isDraggable, data.parentId],
+    [data.id, column.id, index, isDraggable, data.parentId]
   );
 
   const getDropTargetData = useCallback(
@@ -82,7 +82,7 @@ export const useCardDnd = (
         allowedEdges: ["top", "bottom"],
       });
     },
-    [data.id, column.id, index, isDraggable, data.parentId],
+    [data.id, column.id, index, isDraggable, data.parentId]
   );
 
   // Optimize the drop check to avoid recalculating on every drag move
@@ -92,7 +92,7 @@ export const useCardDnd = (
       if (sourceData.itemId === data.parentId) return false;
       return sourceData.isDraggable;
     },
-    [data.id, data.parentId],
+    [data.id, data.parentId]
   );
 
   // Drag and drop event handlers
@@ -114,7 +114,7 @@ export const useCardDnd = (
         },
       });
     },
-    [],
+    []
   );
 
   const handleDragStart = useCallback(() => {
@@ -139,7 +139,7 @@ export const useCardDnd = (
         closestEdge,
       });
     },
-    [data.id],
+    [data.id]
   );
 
   const handleDrag = useCallback(
@@ -156,7 +156,7 @@ export const useCardDnd = (
         closestEdge,
       });
     },
-    [data.id],
+    [data.id]
   );
 
   const handleDragLeave = useCallback(
@@ -170,7 +170,7 @@ export const useCardDnd = (
 
       setState(idle);
     },
-    [data.id],
+    [data.id]
   );
 
   // Setup drag and drop effects
@@ -198,7 +198,7 @@ export const useCardDnd = (
         onDrag: handleDrag,
         onDragLeave: handleDragLeave,
         onDrop: handleDrop,
-      }),
+      })
     );
   }, [
     getInitialData,

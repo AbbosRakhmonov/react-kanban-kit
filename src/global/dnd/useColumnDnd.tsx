@@ -13,18 +13,18 @@ import { useKanbanContext } from "@/context/KanbanContext";
 
 export type TColumnState =
   | {
+      type: "idle";
+    }
+  | {
+      type: "is-dragging";
+    }
+  | {
       type: "is-card-over";
       isOverChildCard: boolean;
       dragging: DOMRect;
     }
   | {
       type: "is-column-over";
-    }
-  | {
-      type: "idle";
-    }
-  | {
-      type: "is-dragging";
     };
 
 const isCardData = (data: any) => {
@@ -41,13 +41,25 @@ export const useColumnDnd = (
   data: BoardItem,
   index: number,
   items: BoardItem[],
-  onColumnDndStateChange?: (info: DndState) => void,
+  totalColumns: number,
+  onColumnDndStateChange?: (info: DndState) => void
 ) => {
-  const { viewOnly } = useKanbanContext();
+  const {
+    viewOnly,
+    allowColumnDrag = true,
+    freezeFirstColumn = false,
+    freezeLastColumn = false,
+  } = useKanbanContext();
   const headerRef = useRef<HTMLDivElement>(null);
   const outerFullHeightRef = useRef<HTMLDivElement | null>(null);
   const innerRef = useRef<HTMLDivElement | null>(null);
   const [state, setState] = useState<TColumnState>(idle);
+
+  // Check if column is frozen
+  const isFirstColumn = index === 0;
+  const isLastColumn = index === totalColumns - 1;
+  const isFrozen =
+    (freezeFirstColumn && isFirstColumn) || (freezeLastColumn && isLastColumn);
 
   const cardOverShadowCount =
     state.type === "is-card-over" && !state.isOverChildCard ? 1 : 0;
@@ -66,7 +78,7 @@ export const useColumnDnd = (
 
       setState(proposed);
     },
-    [],
+    []
   );
 
   const handleGenerateDragPreview = useCallback(
@@ -90,7 +102,7 @@ export const useColumnDnd = (
         },
       });
     },
-    [],
+    []
   );
 
   const handleDragStart = useCallback(() => {
@@ -111,7 +123,7 @@ export const useColumnDnd = (
         setState({ type: "is-column-over" });
       }
     },
-    [data.id, setIsCardOver],
+    [data.id, setIsCardOver]
   );
 
   const handleDropTargetChange = useCallback(
@@ -121,7 +133,7 @@ export const useColumnDnd = (
         return;
       }
     },
-    [setIsCardOver],
+    [setIsCardOver]
   );
 
   const handleDragLeave = useCallback(
@@ -131,12 +143,35 @@ export const useColumnDnd = (
       }
       setState(idle);
     },
-    [data.id],
+    [data.id]
   );
 
-  const canDrop = useCallback(({ source }) => {
-    return source.data.type === "card" || source.data.type === "column";
-  }, []);
+  const canDrop = useCallback(
+    ({ source }) => {
+      // Allow card drops
+      if (source.data.type === "card") {
+        return true;
+      }
+
+      // Handle column drops
+      if (source.data.type === "column") {
+        // Don't allow dropping on frozen columns
+        if (isFrozen) {
+          return false;
+        }
+
+        // Don't allow dropping on the same column
+        if (source.data.columnId === data.id) {
+          return false;
+        }
+
+        return true;
+      }
+
+      return false;
+    },
+    [isFrozen, data.id]
+  );
 
   const canScroll = useCallback(({ source }) => {
     return source.data.type === "card";
@@ -159,7 +194,7 @@ export const useColumnDnd = (
     }
 
     const scroller = outerFullHeightRef.current.querySelector(
-      `.${withPrefix("column-content-list")}`,
+      `.${withPrefix("column-content-list")}`
     );
 
     const columnData = {
@@ -176,8 +211,7 @@ export const useColumnDnd = (
         onGenerateDragPreview: handleGenerateDragPreview,
         onDragStart: handleDragStart,
         onDrop: handleDrop,
-        //TODO: add dnd in columns
-        canDrag: () => false,
+        canDrag: () => allowColumnDrag && !viewOnly && !isFrozen,
       }),
       dropTargetForElements({
         element: outerFullHeightRef.current,
@@ -198,7 +232,7 @@ export const useColumnDnd = (
         canScroll,
         getConfiguration,
         element: scroller,
-      }),
+      })
     );
   }, [
     data,
@@ -227,5 +261,6 @@ export const useColumnDnd = (
     state,
     cardOverShadowCount,
     totalTasksCount,
+    isFrozen,
   };
 };
