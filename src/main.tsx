@@ -9,8 +9,8 @@ const App = () => {
       <Kanban
         viewOnly={false}
         allowColumnDrag={true} // Set to false to disable column dragging
-        freezeFirstColumn={true} // Freeze the first column
-        freezeLastColumn={true} // Freeze the last column
+        // freezeFirstColumn={true} // Freeze the first column
+        // freezeLastColumn={true} // Freeze the last column
         onCardClick={(e, card) => {
           console.log();
         }}

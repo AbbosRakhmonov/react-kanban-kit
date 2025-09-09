@@ -160,11 +160,6 @@ export const useColumnDnd = (
           return false;
         }
 
-        // Don't allow dropping on the same column
-        if (source.data.columnId === data.id) {
-          return false;
-        }
-
         return true;
       }
 
